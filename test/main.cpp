@@ -1,5 +1,11 @@
-#include "UtilsLib.hpp"
+#include "vectorTests.hpp"
+
+#include <iostream>
 
 int main() {
-   test("hello");
+   TestSet tests = genVec3TestSet();
+   tests.runTests();
+   tests.genReport();
+
+   return 0;
 }
