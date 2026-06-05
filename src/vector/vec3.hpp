@@ -1,11 +1,15 @@
 #ifndef VEC3_HPP
 #define VEC3_HPP
 
+#include <iostream>
+
 struct vec3 {
    vec3();
    vec3(const double val);
    vec3(const double val[3]);
 
+   friend std::ostream& operator<<(std::ostream& os, const vec3 &vec);
+   bool operator==(const vec3 &vec) const;
    vec3& operator=(const vec3 &vec);
    double operator[](const unsigned int i) const;
 
@@ -14,7 +18,6 @@ struct vec3 {
    vec3 operator*(const vec3 &vec) const;
    vec3 operator/(const vec3 &vec) const;
 
-   double sum() const;
    double norm() const;
    vec3 uvec() const;
    void normalize();

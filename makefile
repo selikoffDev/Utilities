@@ -14,27 +14,10 @@ SRCS := $(shell find $(SRC_DIR) -name '*.cpp')
 OBJS := $(SRCS:.cpp=.o)
 INC_FLAGS := $(addprefix -I,$(sort $(dir $(SRCS))))
 
-# Debug Settings
-DBGLIB = $(LIB_DIR)/$(TARGET_NAME)_debug.a
-DBGOBJS = $(addprefix $(LIB_DIR)/dbg/,$(OBJS))
-DBGCXXFLAGS = $(INC_FLAGS) -g -O0 -DDEBUG
-
 # Release Settings
 RELLIB = $(LIB_DIR)/$(TARGET_LIB)
 RELOBJS = $(addprefix $(LIB_DIR)/,$(OBJS))
 RELCXXFLAGS = $(INC_FLAGS) -O3 -DNDEBUG
-
-# Debug Lib Build
-dbg: $(DBGLIB)
-
-$(DBGLIB): $(DBGOBJS)
-	$(info Building debug library...)
-	ar rcs $@ $^
-
-$(LIB_DIR)/dbg/%.o: %.cpp
-	$(info Building debug objects...)
-	mkdir -p $(dir $@)
-	$(CXX) -c $(CXXFLAGS) $(DBGCXXFLAGS) $(INCFLAGS) $< -o $@
 
 # Release Lib Build
 rel: $(RELLIB)
@@ -63,27 +46,11 @@ TSRCS := $(shell find $(TSRC_DIR) -name '*.cpp')
 TOBJS := $(TSRCS:.cpp=.o)
 TINC_FLAGS := $(addprefix -I,$(sort $(dir $(TSRCS)))) -I$(SRC_DIR)/
 
-# Debug Settings
-TDBGEXE = $(TST_DIR)/$(TST_NAME)_debug
-TDBGOBJS = $(addprefix $(TST_DIR)/dbg/,$(TOBJS))
-TDBGCXXFLAGS = $(TINC_FLAGS) -g -O0 -DDEBUG
-
 # Release Settings
 TRELEXE = $(TST_DIR)/$(TST_NAME)
 TRELOBJS = $(addprefix $(TST_DIR)/,$(TOBJS))
 TRELCXXFLAGS = $(TINC_FLAGS) -O3 -DNDEBUG
-
-# Debug Test Build
-tstdbg: $(TDBGEXE)
-
-$(TDBGEXE): $(TDBGOBJS)
-	$(info Building debug tests...)
-	$(CXX) $(CXXFLAGS) $(TDBGCXXFLAGS) -o $@ $^ $(LDFLAGS)
-
-$(TST_DIR)/%.o: %.cpp
-	$(info Building debug test objects...)
-	mkdir -p $(dir $@)
-	$(CXX) -c $(CXXFLAGS) $(TDBGCXXFLAGS) -o $@ $<
+$(info $(TSRCS))
 
 # Release Test Build
 tst: $(TRELEXE)
@@ -97,7 +64,9 @@ $(TST_DIR)/%.o: %.cpp
 	mkdir -p $(dir $@)
 	$(CXX) -c $(CXXFLAGS) $(TRELCXXFLAGS) -o $@ $<
 
-.PHONY: clean
+.PHONY: clean, release, debug
 clean:
 	rm -r $(LIB_DIR)
 	rm -r $(TST_DIR)
+
+all: rel tst
