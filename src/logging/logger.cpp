@@ -104,6 +104,7 @@ const std::map<Style,std::string> Logger::mStyleNameMap = {
 const std::map<Symbol,std::string> Logger::mSymMap = {
    {Symbol::CHECK, "\u2714"},
    {Symbol::X, "\u2718"},
+   {Symbol::null, "\u2205"},
 
    {Symbol::DELTA, "\u0394"},
    {Symbol::THETA, "\u0398"},
@@ -133,6 +134,7 @@ const std::map<Symbol,std::string> Logger::mSymMap = {
 const std::map<Symbol,std::string> Logger::mSymNameMap = {
    {Symbol::CHECK, "Check-mark"},
    {Symbol::X, "X-mark"},
+   {Symbol::null, "Null-mark"},
 
    {Symbol::DELTA, "Capital Delta"},
    {Symbol::THETA, "Capital Theta"},
