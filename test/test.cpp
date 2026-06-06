@@ -88,7 +88,9 @@ std::string TestSet::genResult(const Test& tst) const {
    os << "\t" << lgr.constructAnsiString(MAGENTA_FG_BRIGHT,ITALIC)
       << lgr.constructAnsiString(MAGENTA_FG_BRIGHT,BOLD)
       << tst.mName << padding << lgr.mAnsiReset
-      << lgr.constructAnsiString(CYAN_FG_BRIGHT,BOLD) << " -> " << lgr.mAnsiReset;
+      << lgr.constructAnsiString(CYAN_FG_BRIGHT,BOLD) 
+      << " " << lgr.constructSymbolString(R_ARROW) << " " << lgr.mAnsiReset;
+
    switch (tst.mState) {
    case TestState::PASSED:
       os << lgr.constructAnsiString(GREEN_FG_BRIGHT,BOLD) 

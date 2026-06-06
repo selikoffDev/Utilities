@@ -3,14 +3,13 @@
 #include "UtilsLib.hpp"
 
 int main() {
-   TestSet tests = genVec3TestSet();
-   tests.runTests();
-   tests.genReport();
+   std::vector<TestSet> tests;
 
-   Logger lgr;
-   lgr.logLevelTest();
-   lgr.symbolTest();
+   tests.push_back(genVec3TestSet());
 
-
+   for (auto ts: tests) {
+      ts.runTests();
+      ts.genReport();
+   }
    return 0;
 }
