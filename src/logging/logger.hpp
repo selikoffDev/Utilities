@@ -70,6 +70,7 @@ enum Color {
 enum Symbol {
    CHECK,
    X,
+   null,
 
    alpha,
    beta,
