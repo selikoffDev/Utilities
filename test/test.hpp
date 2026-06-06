@@ -34,10 +34,11 @@ struct TestSet {
 
    void genReport() const;
    std::string genBanner() const;
-   std::string genResult() const;
+   std::string genResult(const Test& tst) const;
 
    Logger lgr;
    std::string mName;
    std::vector<Test> mTests;
+   size_t mMaxTestNameSize {0};
 };
 #endif

@@ -31,6 +31,7 @@ void TestSet::registerTest(Test test) {
 void TestSet::runTests() {
    for (Test& test:mTests) {
       test.runTest();
+      mMaxTestNameSize = std::max(mMaxTestNameSize,test.mName.length());
    }
 }
 
@@ -38,24 +39,7 @@ void TestSet::genReport() const{
    std::cout << genBanner();
 
    for (auto test:mTests) {
-      std::cout << "\t" << test.mName << " -> ";
-      switch (test.mState) {
-      case TestState::INCOMPLETE:
-         std::cout << "Incomplete!" << std::endl;
-         break;
-      case TestState::RUNNING:
-         std::cout << "Running!" << std::endl;
-         break;
-      case TestState::PASSED:
-         std::cout << "Passed!" << std::endl;
-         break;
-      case TestState::FAILED:
-         std::cout << "Failed!" << std::endl;
-         break;
-      case TestState::INVALID:
-         std::cout << "Invalid!" << std::endl;
-         break;
-      }
+      std::cout << genResult(test);
    }
 }
 
@@ -96,8 +80,29 @@ std::string TestSet::genBanner() const {
    return os.str();
 }
 
-std::string TestSet::genResult() const {
+std::string TestSet::genResult(const Test& tst) const {
    std::ostringstream os {""};
+
+   std::string padding(mMaxTestNameSize - tst.mName.length(), ' ');
+
+   os << "\t" << lgr.constructAnsiString(MAGENTA_FG_BRIGHT,ITALIC)
+      << lgr.constructAnsiString(MAGENTA_FG_BRIGHT,BOLD)
+      << tst.mName << padding << lgr.mAnsiReset
+      << lgr.constructAnsiString(CYAN_FG_BRIGHT,BOLD) << " -> " << lgr.mAnsiReset;
+   switch (tst.mState) {
+   case TestState::PASSED:
+      os << lgr.constructAnsiString(GREEN_FG_BRIGHT,BOLD) 
+         << lgr.constructSymbolString(CHECK) << lgr.mAnsiReset << std::endl;
+      break;
+   case TestState::FAILED:
+      os << lgr.constructAnsiString(RED_FG_BRIGHT,BOLD) 
+         << lgr.constructSymbolString(X) << lgr.mAnsiReset << std::endl;
+      break;
+   default:
+      os << lgr.constructAnsiString(YELLOW_FG_BRIGHT,BOLD) 
+         << lgr.constructSymbolString(null) << lgr.mAnsiReset << std::endl;
+      break;
+   }
 
    return os.str();
 }
