@@ -71,6 +71,7 @@ enum Symbol {
    CHECK,
    X,
    null,
+   R_ARROW,
 
    alpha,
    beta,
