@@ -3,6 +3,7 @@
 
 #include <iostream>
 
+struct mat3x3;
 struct vec3 {
    vec3();
    vec3(const double val);
@@ -16,6 +17,7 @@ struct vec3 {
    vec3 operator+(const vec3 &vec) const;
    vec3 operator-(const vec3 &vec) const;
    vec3 operator*(const vec3 &vec) const;
+   vec3 operator*(const mat3x3 &mat) const;
    vec3 operator/(const vec3 &vec) const;
 
    double norm() const;
