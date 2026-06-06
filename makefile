@@ -1,5 +1,5 @@
 CXX := g++
-CPP_FLAGS := -Werror -W -Wall -Wextra -pedantic -std=c++20
+CXXFLAGS := -Werror -W -Wall -Wextra -pedantic -std=c++20
 
 # Lib Naming
 TARGET_NAME := libUtils
@@ -57,16 +57,17 @@ tst: $(TRELEXE)
 
 $(TRELEXE): $(TRELOBJS)
 	$(info Building tests...)
-	$(CXX) $(CXXFLAGS) $(TRELCXXFLAGS) -o $@ $^ $(LDFLAGS)
+	$(CXX) $(TRELCXXFLAGS) $(TRELCXXFLAGS) -o $@ $^ $(LDFLAGS)
 
 $(TST_DIR)/%.o: %.cpp
 	$(info Building test objects...)
 	mkdir -p $(dir $@)
 	$(CXX) -c $(CXXFLAGS) $(TRELCXXFLAGS) -o $@ $<
 
-.PHONY: clean, release, debug
+.PHONY: clean, all, remake
 clean:
 	rm -r $(LIB_DIR)
 	rm -r $(TST_DIR)
 
 all: rel tst
+remake: clean rel tst

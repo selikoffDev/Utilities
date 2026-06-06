@@ -9,9 +9,15 @@ struct vec3 {
    vec3(const double val);
    vec3(const double val[3]);
 
+   ~vec3() = default;
+   vec3(const vec3 &) = default;
+   vec3(vec3 &&) = default;
+   vec3& operator=(const vec3 &vec);
+   vec3& operator=(vec3 &&) = default;
+
+
    friend std::ostream& operator<<(std::ostream& os, const vec3 &vec);
    bool operator==(const vec3 &vec) const;
-   vec3& operator=(const vec3 &vec);
    double operator[](const unsigned int i) const;
 
    vec3 operator+(const vec3 &vec) const;
