@@ -4,8 +4,8 @@
 
 Test::Test(const std::string& name, bool (*func)()) 
    : mName(name),
-     mTestFunc(func),
-     mState(TestState::INCOMPLETE)
+     mState(TestState::INCOMPLETE),
+     mTestFunc(func)
 {}
 
 void Test::runTest() {
