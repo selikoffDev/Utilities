@@ -14,5 +14,5 @@ jobs:
     steps:
     - name: checkout repo
       uses: actions/checkout@main
-    - name: make remake
-      run: make remake
+    - name: make all
+      run: make all
