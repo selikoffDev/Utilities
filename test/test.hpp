@@ -1,6 +1,8 @@
 #ifndef TEST_HPP
 #define TEST_HPP
 
+#include "logging/logger.hpp"
+
 #include <string>
 #include <vector>
 
@@ -29,8 +31,12 @@ struct TestSet {
 
    void registerTest(Test test);
    void runTests();
-   void genReport() const;
 
+   void genReport() const;
+   std::string genBanner() const;
+   std::string genResult() const;
+
+   Logger lgr;
    std::string mName;
    std::vector<Test> mTests;
 };
